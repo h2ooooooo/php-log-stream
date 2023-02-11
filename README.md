@@ -15,14 +15,35 @@ Also gives you a simple way of seeking lines:
  - `$stream->seekReset()` to reset the seek to the first byte
  - `$stream->seekEnd()` to seek to the end
 
-## Examples
+## Installation
+
+```
+composer require jalsoedesign/log-streamer
+```
+
+## Usage
+
+### Instantiation
+
+```php
+use jalsoedesign\LogStream\LogStream;
+
+require_once('vendor/autoload.php');
+
+$stream = LogStream::fromPath('foo.txt');
+
+// OR
+
+$handle = fread('foo.txt', r);
+$stream = new LogStream($handle);
+```
 
 ### First 10 lines
 
 Read the first 10 lines of a file and print them as text
 
-```
-$stream = new \jalsoedesign\LogStream\LogStream('foo.txt');
+```php
+$stream = LogStream::fromPath('foo.txt');
 
 echo 'The first 10 lines:' . PHP_EOL;
 echo $stream->readLines(10);
@@ -30,8 +51,8 @@ echo $stream->readLines(10);
 
 Read the first 10 lines of a file and print them as an array
 
-```
-$stream = new \jalsoedesign\LogStream\LogStream('foo.txt');
+```php
+$stream = LogStream::fromPath('foo.txt');
 
 echo 'The first 10 lines:' . PHP_EOL;
 print_r($stream->getLines(10));
@@ -41,8 +62,8 @@ print_r($stream->getLines(10));
 
 Read the last 10 lines of a file and print them as text
 
-```
-$stream = new \jalsoedesign\LogStream\LogStream('foo.txt');
+```php
+$stream = LogStream::fromPath('foo.txt');
 
 echo 'The last 10 lines:' . PHP_EOL;
 echo $stream->readLines(-10);
@@ -50,8 +71,8 @@ echo $stream->readLines(-10);
 
 Read the last 10 lines of a file and print them as an array
 
-```
-$stream = new \jalsoedesign\LogStream\LogStream('foo.txt');
+```php
+$stream = LogStream::fromPath('foo.txt');
 
 echo 'The last 10 lines:' . PHP_EOL;
 print_r($stream->getLines(-10));
@@ -61,8 +82,8 @@ print_r($stream->getLines(-10));
 
 Read the last 10 lines of a file and then continue to printing content when the file gets updated
 
-```
-$stream = new \jalsoedesign\LogStream\LogStream('foo.txt');
+```php
+$stream = LogStream::fromPath('foo.txt');
 
 $logStream->seekLines(-10);
 
@@ -71,16 +92,16 @@ $running = true;
 echo 'The last 10 lines as well as all new content:' . PHP_EOL;
 
 do {
-	echo $logStream->readIncremental();
+    echo $logStream->readIncremental();
 
-	usleep(100000);
+    usleep(100000);
 } while ($running);
 ```
 
 Open a stream and only print the bytes that have been added to the file after opening
 
-```
-$stream = new \jalsoedesign\LogStream\LogStream('foo.txt');
+```php
+$stream = \LogStream::fromPath('foo.txt');
 
 $logStream->seekReset();
 
@@ -89,8 +110,8 @@ $running = true;
 echo 'New file content:' . PHP_EOL;
 
 do {
-	echo $logStream->readIncremental();
+    echo $logStream->readIncremental();
 
-	usleep(100000);
+    usleep(100000);
 } while ($running);
 ```

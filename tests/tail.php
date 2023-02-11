@@ -4,9 +4,10 @@ use jalsoedesign\LogStream\LogStream;
 
 require_once(__DIR__ . '/../vendor/autoload.php');
 
-$resourceDirectory = __DIR__ . '/../res';
+// Make sure to run "composer run log-writer" in a terminal before running this, so content is added
+$outDirectory = __DIR__ . '/../out';
 
-$logStream = new LogStream($resourceDirectory . '/logfile.txt');
+$logStream = LogStream::fromPath($outDirectory . '/logfile.txt');
 
 $logStream->seekLines(-10);
 

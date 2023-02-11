@@ -5,7 +5,7 @@ use SGI\CopyMachine\CopyMachineExclusion;
 
 require_once(__DIR__ . '/../vendor/autoload.php');
 
-$logFile = fopen(__DIR__ . '/logfile.txt', 'a+');
+$logFile = fopen(__DIR__ . '/../out/logfile.txt', 'a+');
 
 $keepAppending = true;
 

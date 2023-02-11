@@ -8,6 +8,10 @@
             "email": "andreas@jalsoedesign.net"
         }
     ],
+    "scripts": {
+        "log-writer": "@php bin/log-writer.php",
+        "number-writer": "@php bin/number-writer.php"
+    },
     "require": {
         "php": "^7.4|^8.0"
     },

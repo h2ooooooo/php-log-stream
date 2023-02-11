@@ -6,9 +6,9 @@ require_once(__DIR__ . '/../vendor/autoload.php');
 
 $resourceDirectory = __DIR__ . '/../res';
 
-$logStream = new LogStream($resourceDirectory . '/numbers.txt');
-$logStreamMultibyte = new LogStream($resourceDirectory . '/multibyte.txt');
-$logStreamEmoji = new LogStream($resourceDirectory . '/emojis.txt');
+$logStream = LogStream::fromPath($resourceDirectory . '/numbers.txt');
+$logStreamMultibyte = LogStream::fromPath($resourceDirectory . '/multibyte.txt');
+$logStreamEmoji = LogStream::fromPath($resourceDirectory . '/emojis.txt');
 
 $buffer = '';
 
@@ -34,4 +34,6 @@ $buffer .=  PHP_EOL;
 $buffer .=  PHP_EOL;
 
 echo $buffer;
+
+// In order to read the emojis correctly we'll have to store them in a format the computer can display
 file_put_contents($resourceDirectory . '/output.html', $buffer);

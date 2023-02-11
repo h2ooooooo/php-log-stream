@@ -8,20 +8,42 @@ namespace jalsoedesign\LogStream;
  * A class to copy and mirror files and directories, with options to exclude certain files and directories.
  */
 class LogStream {
+	/**
+	 * @param string $path The path to the file
+	 *
+	 * @return LogStream The stream created from the handle
+	 *
+	 * @throws \Exception Throws an exception if the handle is not readable
+	 */
+	public static function fromPath(string $path) : LogStream {
+		$handle = fopen($path, 'r');
+
+		return new LogStream($handle);
+	}
+
 	/** @var resource $handle */
 	private $handle;
 
 	/**
-	 * @param string $path
+	 * @param resource $handle A resource from fopen()
 	 *
-	 * @throws \Exception
+	 * @throws \Exception Throws an exception if the handle is not readable
 	 */
-	public function __construct(string $path) {
-		$this->handle = fopen($path, 'r');
-
-		if ($this->handle === false) {
-			throw new \Exception(sprintf('Could not open log file %s for reading', $path));
+	public function __construct($handle) {
+		if ($handle === false) {
+			throw new \Exception('Handle was not readable');
 		}
+
+		$this->handle = $handle;
+	}
+
+	/**
+	 * Closes the handle to the file
+	 *
+	 * @return bool The result from fclose
+	 */
+	public function close() : bool {
+		return fclose($this->handle);
 	}
 
 	/**
