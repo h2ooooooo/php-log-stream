@@ -81,12 +81,13 @@ class LogStream {
 	 * Reads lines either from the start of the file or the end
 	 *
 	 * @param int $lineCount How many lines you want returned (use a negative number to start from the end)
+	 * @param bool $returnOriginalOrder Whether to return the items in original order (negative line counts will return with the first line first rather than the last)
 	 * @param bool $includeEmptyLines Whether to include empty lines or skip them
 	 *
 	 * @return string
 	 */
-	public function readLines(int $lineCount, bool $includeEmptyLines = true) : string {
-		$lines = $this->getLines($lineCount, $includeEmptyLines);
+	public function readLines(int $lineCount, bool $returnOriginalOrder = false, bool $includeEmptyLines = true) : string {
+		$lines = $this->getLines($lineCount, $returnOriginalOrder, $includeEmptyLines);
 
 		return implode(PHP_EOL, $lines);
 	}
@@ -139,11 +140,12 @@ class LogStream {
 	 * Reads lines either from the start of the file or the end
 	 *
 	 * @param int $lineCount How many lines you want returned (use a negative number to start from the end)
+	 * @param bool $returnOriginalOrder Whether to return the items in original order (negative line counts will return with the first line first rather than the last)
 	 * @param bool $includeEmptyLines Whether to include empty lines or skip them
 	 *
 	 * @return string[]
 	 */
-	public function getLines(int $lineCount, bool $includeEmptyLines = true) : array {
+	public function getLines(int $lineCount, bool $returnOriginalOrder = false, bool $includeEmptyLines = true) : array {
 		if ($lineCount < 0) {
 			// Read last lines
 			fseek($this->handle, -1, SEEK_END);
@@ -218,6 +220,10 @@ class LogStream {
 				$lineCountBuffer++;
 			}
 		} while ($lineCountBuffer < $lineCountAbs || $character === false);
+
+		if ($returnOriginalOrder && $lineCount < 0) {
+			$lines = array_reverse($lines);
+		}
 
 		return $lines;
 	}

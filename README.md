@@ -15,6 +15,8 @@ Also gives you a simple way of seeking lines:
  - `$stream->seekReset()` to reset the seek to the first byte
  - `$stream->seekEnd()` to seek to the end
 
+**Note**: Using a negative offset will return the lines in reverse order (last line first). This can be prevented by setting `$returnOriginalOrder` to true as such:
+`$stream->readLines(-10, true)`
 ## Installation
 
 ```
