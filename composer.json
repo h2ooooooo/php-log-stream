@@ -1,0 +1,19 @@
+{
+    "name": "jalsoedesign/log-stream",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Andreas Jalsøe",
+            "email": "andreas@jalsoedesign.net"
+        }
+    ],
+    "require": {
+        "php": "^7.4|^8.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "jalsoedesign\\LogStream\\": "src/"
+        }
+    }
+}
